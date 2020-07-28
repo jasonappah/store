@@ -1,6 +1,7 @@
 var OTPAuth = require("otpauth")
 var QRCode = require('qrcode')
 const express = require('express')
+var path = require('path');
 require('dotenv').config()
 const app = express()
 const port = 3000
@@ -32,15 +33,22 @@ QRCode.toString(uri, { type: 'terminal' }, function(err, url) {
 
 app.get('/', function(req, res) {
     console.log(req)
-    res.send("uwu")
+    res.sendFile(path.join(__dirname + '/login.html'))
 })
 
-app.get('/:key', function(req, res) {
-    console.log(req.params)
+app.get('/upload/:key', function(req, res) {
     if (req.params["key"] == totp.generate()) {
-        res.send("authed")
+        res.sendFile(path.join(__dirname + '/upload.html'))
     } else {
-        res.send("not authed")
+        res.sendFile(path.join(__dirname + '/login.html'))
+    }
+})
+
+app.get('/download/:key', function(req, res) {
+    if (req.params["key"] == totp.generate()) {
+        res.sendFile(path.join(__dirname + '/download.html'))
+    } else {
+        res.sendFile(path.join(__dirname + '/login.html'))
     }
 })
 
