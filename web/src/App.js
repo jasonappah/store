@@ -1,13 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {ThemeProvider, CSSReset} from '@chakra-ui/core';
+import Login from './Login';
+import customTheme from './theme'
 
-function App() {
-  return (
-    <div className="App">
-    // put stuff here i guess
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <ThemeProvider theme={customTheme} >
+        <CSSReset />
+        <Login />
+      </ThemeProvider>
+    )
+  }
 }
 
 export default App;
